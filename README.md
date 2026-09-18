@@ -73,10 +73,38 @@ pip install -r requirements.txt
 python test_suite.py
 ```
 
-### 3. Launch the Application
+### 3. Launch the Application Locally
 
 ```bash
 streamlit run app.py
 ```
 
 Open your browser and navigate to **`http://localhost:8501`**.
+
+---
+
+## 🌐 Deploy to Render (Cloud Hosting)
+
+NetGenAI includes full out-of-the-box configuration files for [Render](https://render.com):
+- `render.yaml` (Render Blueprint specification)
+- `.streamlit/config.toml` (Headless and CORS configuration for cloud hosting)
+- `runtime.txt` (Python 3.11.9 runtime definition)
+
+### Option 1: One-Click Render Blueprint
+1. Go to [Render Dashboard](https://dashboard.render.com).
+2. Click **New +** $\to$ **Blueprint**.
+3. Connect your GitHub repository: `https://github.com/Parthx-06/NetGenAI`.
+4. Render will automatically detect `render.yaml` and configure everything! Click **Apply**.
+
+### Option 2: Manual Web Service Setup
+1. On [Render Dashboard](https://dashboard.render.com), click **New +** $\to$ **Web Service**.
+2. Select your repository: `Parthx-06/NetGenAI`.
+3. Configure the settings:
+   - **Name**: `netgenai`
+   - **Language / Runtime**: `Python 3`
+   - **Branch**: `main`
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `streamlit run app.py --server.port=$PORT --server.address=0.0.0.0 --server.headless=true`
+4. Under **Advanced** $\to$ **Add Environment Variable**:
+   - `PYTHON_VERSION`: `3.11.9`
+5. Click **Create Web Service**. Your app will be live on Render in 2–3 minutes!
